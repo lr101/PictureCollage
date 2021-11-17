@@ -1,31 +1,51 @@
+import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 
 public abstract class Shape {
 
-    protected final Coordinate coordinate;
-    protected final Image image;
+    protected Image image;
+    protected Boolean[][] map;
+    protected int size;
 
-    public Shape (int xC, int xY, Image image) {
-        coordinate = new Coordinate(xC, xY);
+    public Shape ( Image image, int size) throws IOException {
         this.image = image;
+        this.map = this.getShapeMap(size);
+        this.size = size;
     }
 
-    public int getCor_x() {
-        return coordinate.getxC();
-    }
-
-    public int getCor_y() {
-        return coordinate.getyC();
+    public Shape () {
+        this.image = null;
     }
 
     public Image getImage() {
         return image;
     }
 
-    abstract ArrayList<Coordinate> getCoordinates(Coordinate lastC, Coordinate borderC, ArrayList<Coordinate> listC, int size);
+    public void setImage(Image image) {
+        this.image = image;
+    }
+
+    abstract ArrayList<Coordinate> getCoordinates(Coordinate newC, Dimension borderD, ArrayList<Coordinate> listC, int size, int info);
 
     abstract Coordinate calC (Coordinate center, int size, int corner);
 
     abstract double calD (Dimension map, int numImages);
+
+    abstract ArrayList<Shape> getShapes(int numImages, int size, ArrayList<Image> imageL) throws IOException;
+
+    abstract int getXSize(int size);
+
+    abstract int getYSize(int size);
+
+    abstract Graphics2D writeShape(Graphics2D g, Coordinate center) throws IOException;
+
+    abstract Boolean[][] getShapeMap (int size) throws IOException;
+
+    @Override
+    public String toString() {
+        return "Size: " + size + " | Image: " + image.getPath().getAbsolutePath();
+    }
 
 }

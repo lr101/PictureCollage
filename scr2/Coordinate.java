@@ -14,4 +14,9 @@ public class Coordinate {
     public int getyC() {
         return yC;
     }
+
+    @Override
+    public String toString() {
+        return "( " + this.xC + "| " + this.yC + ")";
+    }
 }

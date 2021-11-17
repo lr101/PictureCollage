@@ -1,37 +1,70 @@
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 
 public class Image {
     private File path;
-    private int width;
-    private int height;
 
-    public Image(File path, int width, int height){
+    public Image(File path){
         this.path = path;
-        this.width = width;
-        this.height = height;
     }
 
     public File getPath() {
         return path;
     }
 
-    public int getHeight() {
-        return height;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
     public void setPath(File path) {
         this.path = path;
     }
 
-    public void setWidth(int width) {
-        this.width = width;
+    public BufferedImage getImage() throws IOException {
+        return ImageIO.read(path);
     }
+
+    public BufferedImage getImageResized(Dimension d) throws IOException {
+        //get image
+        BufferedImage inputImage = ImageIO.read(path);
+
+        //calculate image size
+        d = calD(d.getyC(), d.getxC(),inputImage.getHeight(), inputImage.getWidth());
+
+        //resize image
+        BufferedImage outputImage = new BufferedImage(d.getxC(), d.getyC(), inputImage.getType());
+        Graphics2D g = outputImage.createGraphics();
+        g.drawImage(inputImage, 0, 0, d.getxC(), d.getyC(), null);
+
+        //clean-up
+        g.dispose();
+        inputImage.flush();
+
+        //return
+        return outputImage;
+    }
+
+    private Dimension calD (int height, int width, int iHeight, int iWidth) {
+        double wRatio =  iWidth / (double) width;
+        double hRatio = iHeight / (double) height;
+
+
+        if (wRatio < hRatio) {
+            if (wRatio >= 1) {
+                height = (int)(iHeight / wRatio);
+            } else {
+                width = iWidth;
+                height = iHeight;
+            }
+        } else {
+            if (hRatio >= 1) {
+                width = (int) (iWidth / hRatio);
+            } else {
+                width = iWidth;
+                height = iHeight;
+            }
+        }
+        return new Dimension(width, height);
+    }
+
+
 }
