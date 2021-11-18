@@ -8,8 +8,6 @@ import java.util.ArrayList;
 public class Hexagon extends Shape {
 
     private static final int HEX_COLOR = 0x000000;
-    private static final int EVEN = 0;
-    private static final int ODD = 1;
 
     public Hexagon(Image image, int size) {
         super(image, size);
@@ -33,19 +31,15 @@ public class Hexagon extends Shape {
         Coordinate newC = new Coordinate(this.getXSize(size),this.getYSize(size));
         boolean even = true;
 
-        //add first
-        listC.add(newC);
-
         //loop
         while (newC.getyC() - size < borderD.getyC()) {
-            if (newC.getxC() + 2 * this.getXSize(size) < borderD.getxC()) {
+            listC.add(newC);
+            if (newC.getxC() + this.getXSize(size) < borderD.getxC()) {
                 //create a new cor bordering at the right (X -> X)
                 newC = new Coordinate(newC.getxC() + this.getXSize(size) * 2, newC.getyC());
-                listC.add(newC);
             } else {
                 //create a new row below
-                newC = new Coordinate( (even ? 0 : this.getXSize(size) ), newC.getyC() + (int) (size * 1.5));
-                listC.add(newC);
+                newC = new Coordinate( (even ? this.getXSize(size) * 2 : this.getXSize(size) ), newC.getyC() + (int) (size * 1.5));
                 even = !even;
             }
         }
@@ -130,8 +124,8 @@ public class Hexagon extends Shape {
             for (int x = 0; x < width; x++){
                 for (int y = 0; y < height; y++)  {
                     if (map[x][y]) {
-                        int xCor = xC + x;
-                        int yCor = yC + y;
+                        int xCor = (xC + x) % d.getxC();
+                        int yCor = (yC + y) % d.getyC();
                         g.drawImage(i, xCor, yCor, xCor + 1, yCor + 1,x, y, x +1, y + 1, null);
                     }
                 }
