@@ -27,7 +27,7 @@ public abstract class Shape {
         this.image = image;
     }
 
-    abstract ArrayList<Coordinate> getCoordinates(Coordinate newC, Dimension borderD, ArrayList<Coordinate> listC, int size, int info);
+    abstract ArrayList<Coordinate> getCoordinates(Coordinate newC, Dimension borderD, ArrayList<Coordinate> listC, int size);
 
     abstract Coordinate calC (Coordinate center, int size, int corner);
 
@@ -39,7 +39,7 @@ public abstract class Shape {
 
     abstract int getYSize(int size);
 
-    abstract Graphics2D writeShape(Graphics2D g, Coordinate center) throws IOException;
+    abstract Graphics2D writeShape(Graphics2D g, Coordinate center, Dimension d) throws IOException;
 
     abstract Boolean[][] getShapeMap (int size) throws IOException;
 

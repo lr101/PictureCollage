@@ -2,10 +2,10 @@ import java.io.File;
 
 public class Main {
 
-    private static final String PATH = "D:\\lukas\\Documents\\GIT\\Lukas - Git\\PictureCollage\\pictures";
+    private static final String PATH = "D:\\lukas\\Bilder\\D3500 Edited pictures\\LigthroomClassic";
     public static final int HEIGHT = 1080;
     public static final int WIDTH = 1920;
-    public static final int NUM_IMAGES = 12;
+    public static final int NUM_IMAGES = 50;
     public static final String FILE_NAME = "test";
 
     public static void main(String[] args) {
