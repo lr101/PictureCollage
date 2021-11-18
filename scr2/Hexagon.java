@@ -11,7 +11,7 @@ public class Hexagon extends Shape {
     private static final int EVEN = 0;
     private static final int ODD = 1;
 
-    public Hexagon(Image image, int size) throws IOException {
+    public Hexagon(Image image, int size) {
         super(image, size);
     }
 
@@ -20,38 +20,34 @@ public class Hexagon extends Shape {
     }
 
     /**
-     * Calculates
+     * Calculates Coordinates for a Hexagon pattern
      *
-     * @param newC
-     * @param borderD
-     * @param listC
-     * @param size radius of the bigger Hexagon circle
-     * @return
+     * @param borderD dimensions of final image
+     * @param size radius of the bigger Hexagon circle / length of one side
+     * @return a list of Coordinates that creates a perfect pattern
      */
     @Override
-    ArrayList<Coordinate> getCoordinates(Coordinate newC, Dimension borderD, ArrayList<Coordinate> listC, int size) {
-        int yCriteria = newC.getyC() - size;
+    ArrayList<Coordinate> getCoordinates(Dimension borderD, int size) {
+        //init
+        ArrayList<Coordinate> listC = new ArrayList<>();
+        Coordinate newC = new Coordinate(this.getXSize(size),this.getYSize(size));
         boolean even = true;
+
+        //add first
         listC.add(newC);
-        // Stop of recursion
-        while (yCriteria < borderD.getyC()) {
+
+        //loop
+        while (newC.getyC() - size < borderD.getyC()) {
             if (newC.getxC() + 2 * this.getXSize(size) < borderD.getxC()) {
                 //create a new cor bordering at the right (X -> X)
                 newC = new Coordinate(newC.getxC() + this.getXSize(size) * 2, newC.getyC());
                 listC.add(newC);
             } else {
                 //create a new row below
-                if (even) {
-                    newC = new Coordinate(listC.get(0).getxC() - this.getXSize(size), newC.getyC() + (int) (size * 1.5));
-                    listC.add(newC);
-                    even = false;
-                } else {
-                    newC = new Coordinate(listC.get(0).getxC(), newC.getyC() + (int) (size * 1.5));
-                    listC.add(newC);
-                    even = true;
-                }
+                newC = new Coordinate( (even ? 0 : this.getXSize(size) ), newC.getyC() + (int) (size * 1.5));
+                listC.add(newC);
+                even = !even;
             }
-            yCriteria = newC.getyC() - size;
         }
         return listC;
     }
@@ -81,16 +77,19 @@ public class Hexagon extends Shape {
             default: p = new Coordinate(0,0);
         }
         return p;
-        //int angle = 60 * corner - 30;
-        //double angleRad = (Math.PI / 180) * angle;
-        //return new Coordinate((int)(center.getxC() + size * Math.cos(angleRad)), (int)(center.getyC() + size * Math.sin(angleRad)));
     }
 
     @Override
-    double calD(Dimension map, int numImages) {
-        return Math.sqrt((2 * map.getxC() * map.getyC()) / (numImages * 3 * Math.sqrt(3)));
+    int getHeight(int size, int rows) {
+        return  rows/2 * 3 * size;
     }
 
+    @Override
+    int getWidth(int size, int width) {
+        return (width / this.getXSize(size)) *  this.getXSize(size);
+    }
+
+    @Override
     public double calSize(int width, int numI, int numR) {
         double c = 1 /  Math.sqrt(3.0);
         return c * ((numR * width) / (double) numI);
@@ -143,7 +142,7 @@ public class Hexagon extends Shape {
     }
 
     @Override
-    Boolean[][] getShapeMap(int size) throws IOException {
+    Boolean[][] getShapeMap(int size) {
         int inRadius = this.getXSize(size);
 
         //create graphics
@@ -156,18 +155,12 @@ public class Hexagon extends Shape {
         Coordinate center = new Coordinate(inRadius, size);
         for (int i = 0; i < 6; i++) {
             Coordinate c = this.calC(center, size, i);
-            System.out.println(c);
             polygon.addPoint(c.getxC(), c.getyC());
         }
         g.draw(polygon);
         g.fill(polygon);
 
-
-
-        ImageIO.write(image, "PNG", new File("D:\\lukas\\Documents\\GIT\\Lukas - Git\\PictureCollage", "combined.png"));
-
-        //get map
-        Boolean[][] map = mapFromImage(image);
+        //ImageIO.write(image, "PNG", new File("D:\\lukas\\Documents\\GIT\\Lukas - Git\\PictureCollage", "combined.png"));
 
         // clean-up code
         g.dispose();

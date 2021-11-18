@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class UtilMain {
     private final int startX = 0;
@@ -17,18 +18,16 @@ public class UtilMain {
         this.shape = shape;
     }
 
-    public void create(int height, int width, int numImages,  String name) {
-        Hexagon h = new Hexagon();
-        System.out.println(h.calSize(width, numImages, 4));
-        int size = (int) Math.ceil(h.calSize(width, numImages, 4));
-        height = 2 * 3 * size;
-        width = (width / shape.getXSize(size)) *  shape.getXSize(size);
-        System.out.println(size);
-        ArrayList<Coordinate> listC = shape.getCoordinates(new Coordinate(startX + shape.getXSize(size),startY + (shape.getYSize(size))), new Dimension(width, height), new ArrayList<>(), size);
+    public void create(int rows, int width, int numImages,  String name) {
+
+        int size = (int) Math.ceil(shape.calSize(width, numImages, rows));
+        int height = shape.getHeight(size, rows);
+        width = shape.getWidth(size, width);
+        ArrayList<Coordinate> listC = shape.getCoordinates(new Dimension(width, height), size);
         try {
             this.write(listC, width, height, size, name);
         } catch (IOException e) {
-            System.out.println(e);
+            System.out.println(Arrays.toString(e.getStackTrace()));
         }
     }
 
