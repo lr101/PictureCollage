@@ -9,10 +9,10 @@ public abstract class Shape {
     protected Boolean[][] map;
     protected int size;
 
-    public Shape ( Image image, int size) {
+    public Shape ( Image image, int size, Boolean[][] map) {
         this.image = image;
-        this.map = this.getShapeMap(size);
         this.size = size;
+        this.map = map;
     }
 
     public Shape () {
@@ -23,33 +23,41 @@ public abstract class Shape {
         return image;
     }
 
+    public void setMap(Boolean[][] map) { this.map = map; }
+
+    public Boolean[][] getMap() { return this.map; }
+
+    public int getSize() { return size; }
+
+    public void setSize(int size) {this.size = size; }
+
     public void setImage(Image image) {
         this.image = image;
     }
 
-    abstract ArrayList<Coordinate> getCoordinates(Dimension borderD, int size);
+    abstract ArrayList<Coordinate> getCoordinates(Dimension borderD);
 
-    abstract Coordinate calC (Coordinate center, int size, int corner);
+    abstract Coordinate calCorner (Coordinate center, int corner);
 
-    abstract int getHeight(int size, int rows);
+    abstract int getHeight(int rows);
 
-    abstract int getWidth(int size, int width);
+    abstract int getWidth(int width);
 
-    abstract public double calSize(int width, int numI, int numR);
+    abstract public int calSize(int width, int numI, int numR);
 
-    abstract ArrayList<Shape> getShapes(int numImages, int size, ArrayList<Image> imageL) throws IOException;
+    abstract ArrayList<Shape> getShapes(int numImages, ArrayList<Image> imageL) throws IOException;
 
-    abstract int getXSize(int size);
+    abstract int getXSize();
 
-    abstract int getYSize(int size);
+    abstract int getYSize();
 
     abstract Graphics2D writeShape(Graphics2D g, Coordinate center, Dimension d) throws IOException;
 
-    abstract Boolean[][] getShapeMap (int size);
+    abstract Boolean[][] createShapeMap();
 
     @Override
     public String toString() {
-        return "Size: " + size + " | Image: " + image.getPath().getAbsolutePath();
+        return "Size: " + this.size + " | Image: " + image.getPath().getAbsolutePath();
     }
 
 }

@@ -1,18 +1,23 @@
 public class Dimension {
 
-    protected final int xC;
-    protected final int yC;
+    protected final int width;
+    protected final int height;
 
-    public Dimension(int xC, int yC) {
-        this.xC = xC;
-        this.yC = yC;
+    public Dimension(int width, int height) {
+        this.width = width;
+        this.height = height;
     }
 
-    public int getxC() {
-        return xC;
+    public int getWidth() {
+        return width;
     }
 
-    public int getyC() {
-        return yC;
+    public int getHeight() {
+        return height;
+    }
+
+    @Override
+    public String toString() {
+        return "( " + this.width + "| " + this.height + ")";
     }
 }

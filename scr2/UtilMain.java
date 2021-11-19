@@ -1,5 +1,4 @@
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -11,36 +10,42 @@ public class UtilMain {
 
     private static final String FILE_TYPE = "PNG";
     private final File workingDir;
+    private final File savingDir;
     private final Shape shape;
 
-    public UtilMain(File workingDir, Shape shape) {
+    public UtilMain(File workingDir, Shape shape, File savingDir) {
         this.workingDir = workingDir;
         this.shape = shape;
+        this.savingDir = savingDir;
     }
 
-    public void create(int rows, int width, int numImages,  String name, File file) {
+    public void create(int rows, int width, int numImages,  String name) {
+        //calculate size
+        shape.setSize(shape.calSize(width, numImages, rows));
+        //calculate bitmap
+        shape.setMap(shape.createShapeMap());
 
-        int size = (int) Math.ceil(shape.calSize(width, numImages, rows));
-        int height = shape.getHeight(size, rows);
-        width = shape.getWidth(size, width);
-        ArrayList<Coordinate> listC = shape.getCoordinates(new Dimension(width, height), size);
+        //calculate dimensions of picture
+        Dimension pictureD = new Dimension(shape.getWidth(width), shape.getHeight(rows));
+        ArrayList<Coordinate> listC = shape.getCoordinates(pictureD);
         try {
-            this.write(listC, width, height, size, name, file);
+            this.write(listC, pictureD, name);
         } catch (IOException e) {
             System.out.println(Arrays.toString(e.getStackTrace()));
         }
     }
 
-    private void write(ArrayList<Coordinate> listC, int width, int height, int size, String name, File file) throws IOException {
+    private void write(ArrayList<Coordinate> listC, Dimension pictureD, String name) throws IOException {
         ImageManager iM = new ImageManager(workingDir);
 
         //get a list of shapes
-        ArrayList<Shape> listS = shape.getShapes(listC.size(), size, iM.getImages());
-        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        ArrayList<Shape> listS = shape.getShapes(listC.size(), iM.getImages());
+        //create image
+        BufferedImage image = new BufferedImage(pictureD.getWidth(), pictureD.getHeight(), BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = image.createGraphics();
 
         //logging
-        System.out.println("Size: (" + width + "|" + height + ")");
+        System.out.println("Size: " + pictureD);
         System.out.println("Number of Pictures: " + listC.size());
 
         //Creating JFrame
@@ -52,12 +57,14 @@ public class UtilMain {
             System.out.println("(" + (i + 1) + "/" + listC.size() + ") Adding at: " + listC.get(i));
             System.out.println("\tShape: " + listS.get(i));
             //write picture shape
-            g = listS.get(i).writeShape(g, listC.get(i), new Dimension(width, height));
+            g = listS.get(i).writeShape(g, listC.get(i), pictureD);
+            //update JFrame
             jFM.update();
         }
 
         //save image
-        ImageIO.write(image, FILE_TYPE, new File(file.getAbsolutePath(), name + "." + FILE_TYPE ));
+        ImageIO.write(image, FILE_TYPE, new File(savingDir.getAbsolutePath(), name + "." + FILE_TYPE ));
+        //clean-up
         g.dispose();
         image.flush();
         jFM.destroy();

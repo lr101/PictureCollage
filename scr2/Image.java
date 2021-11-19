@@ -28,12 +28,12 @@ public class Image {
         BufferedImage inputImage = ImageIO.read(path);
 
         //calculate image size
-        d = calD(d.getyC(), d.getxC(),inputImage.getHeight(), inputImage.getWidth());
+        d = calD(d.getHeight(), d.getWidth(),inputImage.getHeight(), inputImage.getWidth());
 
         //resize image
-        BufferedImage outputImage = new BufferedImage(d.getxC(), d.getyC(), inputImage.getType());
+        BufferedImage outputImage = new BufferedImage(d.getWidth(), d.getHeight(), inputImage.getType());
         Graphics2D g = outputImage.createGraphics();
-        g.drawImage(inputImage, 0, 0, d.getxC(), d.getyC(), null);
+        g.drawImage(inputImage, 0, 0, d.getWidth(), d.getHeight(), null);
 
         //clean-up
         g.dispose();
