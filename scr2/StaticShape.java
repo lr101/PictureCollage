@@ -1,21 +1,22 @@
-import java.awt.*;
+/*import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Map;
 
-public abstract class Shape {
+public abstract class StaticShape{
+
 
     protected Image image;
     protected Boolean[][] map;
     protected int size;
+    protected Dimension d;
 
-    public Shape ( Image image, int size, Boolean[][] map) {
+    public StaticShape(Image image, int size, Boolean[][] map) {
         this.image = image;
         this.size = size;
         this.map = map;
     }
 
-    public Shape () {
+    public StaticShape() {
         this.image = null;
     }
 
@@ -35,18 +36,13 @@ public abstract class Shape {
         this.image = image;
     }
 
-    abstract ArrayList<Coordinate> getCoordinates(Dimension borderD);
-
     abstract Coordinate calCorner (Coordinate center, int corner);
-
-    abstract int getHeight(int rows);
-
-    abstract int getWidth(int width);
 
     abstract public int calSize(int width, int numI, int numR);
 
-    abstract ArrayList<Shape> getShapes(int numImages, ArrayList<Image> imageL) throws IOException;
+    abstract ArrayList<StaticShape> getShapes(int numImages, ArrayList<Image> imageL) throws IOException;
 
+    abstract void setDimension(int rows, Dimension size);
     abstract int getXSize();
 
     abstract int getYSize();
@@ -61,3 +57,4 @@ public abstract class Shape {
     }
 
 }
+*/
