@@ -4,6 +4,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 public class ShapeManagement {
 
@@ -36,6 +38,7 @@ public class ShapeManagement {
             //change size of images
             //change bitmap of images
             //set coordinates in images
+            Collections.shuffle(images);
             images = defaultShape.getCoordinates(finalPictureDimension, images);
             imageManager.writeImage(images, finalPictureDimension, savingDir, name, defaultShape);
 

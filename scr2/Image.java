@@ -21,6 +21,11 @@ public class Image {
         this.leftTop = null;
     }
 
+    @Override
+    public String toString() {
+        return path.getName();
+    }
+
     public File getPath() {
         return path;
     }

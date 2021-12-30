@@ -45,7 +45,7 @@ public class ImageManager {
         Graphics2D g = image.createGraphics();
         for (int i = 0; i < images.size(); i++) {
             //logging
-            System.out.println("(" + (i + 1) + "/" + images.size() + ") Adding at: " + images.get(i).getLeftTop());
+            System.out.println("(" + (i + 1) + "/" + images.size() + " -> " + (Math.round((i+1) * 100.0 / images.size())) +"%) Adding at: " + images.get(i).getLeftTop());
             //write picture shape
             DefaultShape.writeShape(g, images.get(i), shape.createShapeMap(images.get(i), shape.getSize()));
         }

@@ -45,9 +45,13 @@ public class Rectangle implements DefaultShape {
 
             int loopHeight = this.getLoopHeight(borderD, images, recPair, bigImages);
             this.runCoordinates(borderD, loopHeight, bigImages, recPair, images);
-
+            for (Image i : bigImages) {
+                System.out.println(i);
+            }
             images.removeAll(bigImages);
             for(RectanglePair r : recPair) {
+                System.out.println(r.getRec1());
+                System.out.println(r.getRec2());
                 images.remove(r.getRec1());
                 images.remove(r.getRec2());
             }
@@ -93,7 +97,8 @@ public class Rectangle implements DefaultShape {
     }
 
     private boolean random(int lastRandom) {
-        return random.nextInt(101) / 100.0 < (lastRandom / RANDOM_FACTOR);
+        //return random.nextInt(101) / 100.0 < (lastRandom / RANDOM_FACTOR);
+        return lastRandom == 5;
     }
 
     private int getLoopHeight(Dimension borderD, ArrayList<Image> images, ArrayList<RectanglePair> recPair, ArrayList<Image> bigImages ) throws IOException {
