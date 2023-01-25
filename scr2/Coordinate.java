@@ -17,6 +17,6 @@ public class Coordinate {
 
     @Override
     public String toString() {
-        return "( " + this.xC + "| " + this.yC + ")";
+        return "( x:" + this.xC + "| y:" + this.yC + ")";
     }
 }
