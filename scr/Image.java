@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.Iterator;
 
 public class Image {
-    private File path;
+    private final File path;
     private final double ratio;
     private Dimension size;
     private Coordinate leftTop;
@@ -24,14 +24,6 @@ public class Image {
     @Override
     public String toString() {
         return path.getName();
-    }
-
-    public File getPath() {
-        return path;
-    }
-
-    public void setPath(File path) {
-        this.path = path;
     }
 
     public int getWidth() {
@@ -73,31 +65,8 @@ public class Image {
     }
 
 
-    public void getImageResized(Dimension d) throws IOException {
+    public void getImageResized(Dimension d) {
         this.size = d;
-    }
-
-    private Dimension calD (int height, int width, int iHeight, int iWidth) {
-        double wRatio =  iWidth / (double) width;
-        double hRatio = iHeight / (double) height;
-
-
-        if (wRatio < hRatio) {
-            if (wRatio >= 1) {
-                height = (int)(iHeight / wRatio);
-            } else {
-                width = iWidth;
-                height = iHeight;
-            }
-        } else {
-            if (hRatio >= 1) {
-                width = (int) (iWidth / hRatio);
-            } else {
-                width = iWidth;
-                height = iHeight;
-            }
-        }
-        return new Dimension(width, height);
     }
 
 

@@ -3,7 +3,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Hexagon implements DefaultShape{
+public class Hexagon extends DefaultShape{
 
     private int size;
 
@@ -14,29 +14,31 @@ public class Hexagon implements DefaultShape{
      *
      * @param borderD dimensions of final image
      */
-    public ArrayList<Image> getCoordinates(Dimension borderD, ArrayList<Image> images) throws IOException {
+    public ArrayList<Image> getCoordinates(Dimension borderD, ArrayList<Image> images) {
         //init
         Coordinate newC = new Coordinate(0,0);
         boolean even = true;
         int xSize = this.getXSize() * 2;
         int ySize = this.getYSize() * 2;
+        ArrayList<Image> toBeRemoved = new ArrayList<>();
         //loop
-        for (int i = 0;i < images.size(); i++) {
-            if (newC.getyC() <= borderD.getHeight()) {
-                images.get(i).setLeftTop(newC);
-                images.get(i).getImageResized(new Dimension(xSize, ySize));
-                if (newC.getxC() + getXSize() < borderD.getWidth()) {
+        for (Image image : images) {
+            if (newC.yC() <= borderD.getHeight()) {
+                image.setLeftTop(newC);
+                image.getImageResized(new Dimension(xSize, ySize));
+                if (newC.xC() + getXSize() < borderD.getWidth()) {
                     //create a new cor bordering at the right (X -> X)
-                    newC = new Coordinate(newC.getxC() + xSize, newC.getyC());
+                    newC = new Coordinate(newC.xC() + xSize, newC.yC());
                 } else {
                     //create a new row below
-                    newC = new Coordinate((even ? xSize : this.getXSize()), newC.getyC() + (int) (size * 1.5));
+                    newC = new Coordinate((even ? (int) (xSize  * 0.5) : 0), newC.yC() + (int) (size * 1.5));
                     even = !even;
                 }
             } else {
-                images.remove(i);
+                toBeRemoved.add(image);
             }
         }
+        images.removeAll(toBeRemoved);
         return images;
     }
 
@@ -59,7 +61,7 @@ public class Hexagon implements DefaultShape{
         Coordinate center = new Coordinate(inRadius, (int)size);
         for (int i = 0; i < 6; i++) {
             Coordinate c = this.calCorner(center, i);
-            polygon.addPoint(c.getxC(), c.getyC());
+            polygon.addPoint(c.xC(), c.yC());
         }
         g.draw(polygon);
         g.fill(polygon);
@@ -74,29 +76,29 @@ public class Hexagon implements DefaultShape{
 
     @Override
     public double getSize() {
-        return 0;
+        return size;
     }
 
     private Coordinate calCorner(Coordinate center, int corner) {
         Coordinate p;
         switch (corner % 6) {
             case 0:
-                p = new Coordinate(center.getxC(), center.getyC() + size);
+                p = new Coordinate(center.xC(), center.yC() + size);
                 break;
             case 1:
-                p = new Coordinate(center.getxC() + this.getXSize(), center.getyC() + size/2);
+                p = new Coordinate(center.xC() + this.getXSize(), center.yC() + size/2);
                 break;
             case 2:
-                p = new Coordinate(center.getxC() + this.getXSize(), center.getyC() - size/2);
+                p = new Coordinate(center.xC() + this.getXSize(), center.yC() - size/2);
                 break;
             case 3:
-                p = new Coordinate(center.getxC(), center.getyC() - size);
+                p = new Coordinate(center.xC(), center.yC() - size);
                 break;
             case 4:
-                p = new Coordinate(center.getxC() - this.getXSize(), center.getyC() - size/2);
+                p = new Coordinate(center.xC() - this.getXSize(), center.yC() - size/2);
                 break;
             case 5:
-                p = new Coordinate(center.getxC() - this.getXSize(), center.getyC() + size/2);
+                p = new Coordinate(center.xC() - this.getXSize(), center.yC() + size/2);
                 break;
             default: p = new Coordinate(0,0);
         }
@@ -145,5 +147,32 @@ public class Hexagon implements DefaultShape{
             }
         }
         return map;
+    }
+
+    @Override
+    public void writeShape(Dimension d, Graphics2D g, Image image, Boolean[][] map) throws IOException {
+        if (image != null) {
+            int width = image.getWidth();
+            int height = image.getHeight();
+
+            int xC = image.getLeftTop().xC();
+            int yC = image.getLeftTop().yC();
+
+            BufferedImage bufI = image.getImage();
+            int w = d.getWidth();
+            int h = d.getHeight();
+            System.out.println(h);
+
+            for (int x = 0; x < width; x++){
+                for (int y = 0; y < height; y++)  {
+                    if (map[x][y]) {
+                        int xCor = (xC + x) % w;
+                        int yCor = (yC + y) % h;
+                        g.drawImage(bufI, xCor, yCor, xCor + 1, yCor + 1,x, y, x +1, y + 1, null);
+                    }
+                }
+            }
+            bufI.flush();
+        }
     }
 }

@@ -3,9 +3,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
-public class Rectangle implements DefaultShape {
-
-    private final static double RANDOM_FACTOR = 10.0;
+public class Rectangle extends DefaultShape {
     private final Random random = new Random();
     private final long RANDOM_SEED = random.nextLong();
 
@@ -32,7 +30,7 @@ public class Rectangle implements DefaultShape {
         }
     }
 
-    private void setImageCoordinates(Image image, Coordinate cor, Dimension d) throws IOException {
+    private void setImageCoordinates(Image image, Coordinate cor, Dimension d) {
         image.setLeftTop(cor);
         image.getImageResized(d);
     }
@@ -44,6 +42,7 @@ public class Rectangle implements DefaultShape {
             ArrayList<RectanglePair> recPair = new ArrayList<>();
 
             int loopHeight = this.getLoopHeight(borderD, images, recPair, bigImages);
+            System.out.println(loopHeight);
             this.runCoordinates(borderD, loopHeight, bigImages, recPair, images);
             for (Image i : bigImages) {
                 System.out.println(i);
@@ -65,7 +64,7 @@ public class Rectangle implements DefaultShape {
         int countLastBig = 0;
         random.setSeed(this.RANDOM_SEED);
         Coordinate newC = new Coordinate(0,0);
-        while (newC.getyC() < borderD.getHeight() && recPair.size() != 0) {
+        while (newC.yC() < borderD.getHeight() && recPair.size() != 0) {
             Dimension imageSize;
             if (this.random(countLastBig)) {
                 if (bigImages.size() == 0) {
@@ -80,17 +79,17 @@ public class Rectangle implements DefaultShape {
             } else {
                 imageSize = new Dimension((int) (recPair.get(0).getRatio() * loopHeight), loopHeight);
                 this.setImageCoordinates(recPair.get(0).getRec1(), newC, imageSize);
-                this.setImageCoordinates(recPair.get(0).getRec2(), new Coordinate(newC.getxC(), newC.getyC() + imageSize.getHeight()), imageSize);
+                this.setImageCoordinates(recPair.get(0).getRec2(), new Coordinate(newC.xC(), newC.yC() + imageSize.getHeight()), imageSize);
                 recPair.remove(0);
                 countLastBig++;
             }
 
-            if (newC.getxC() + imageSize.getWidth() < borderD.getWidth()) {
+            if (newC.xC() + imageSize.getWidth() < borderD.getWidth()) {
                 //create a new cor bordering at the right (X -> X)
-                newC = new Coordinate(newC.getxC() + imageSize.getWidth(), newC.getyC());
+                newC = new Coordinate(newC.xC() + imageSize.getWidth(), newC.yC());
             } else {
                 //create a new row below
-                newC = new Coordinate(0, newC.getyC() + loopHeight * 2);
+                newC = new Coordinate(0, newC.yC() + loopHeight * 2);
             }
         }
         return recPair.size() != 0;
@@ -106,7 +105,7 @@ public class Rectangle implements DefaultShape {
         while(this.runCoordinates(borderD, (int) Math.ceil(borderD.getHeight() * 1.0 / (numRows + 2 )), bigImages, recPair, images)) {
             numRows += 2;
         }
-        return (int) Math.ceil(borderD.getHeight() / (numRows * 1.0));
+        return (int) Math.ceil(borderD.getHeight() / (numRows == 0 ? 1.0 : (numRows * 1.0)));
     }
 
     @Override
