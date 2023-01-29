@@ -1,8 +1,8 @@
 ## What it does:
 
-This JAVA Program takes multiple images from a selectes folder and creates with a selectes width and height a random collage. It works with different sized images and different ratio images, so no pre-processing is necessary. Additionally, there are two available shapes to choose from: *Rectangle* and *Hexagon* 
+This JAVA Program takes multiple images from a selects folder and creates with a selectes width and height a random collage. It works with different sized images and different ratio images, so no pre-processing is necessary. Additionally, there are two available shapes to choose from: *Rectangle* and *Hexagon* 
 
-Perfect for creating posters wit A LOT of images
+Perfect for creating posters wit A LOT of images and a high quality 
 
 Example results (2000x1500 rectangles):
 ![image1](examples/final1.jpg)
