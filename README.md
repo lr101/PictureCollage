@@ -5,13 +5,13 @@ This JAVA Program takes multiple images from a selectes folder and creates with 
 Perfect for creating posters wit A LOT of images
 
 Example results (2000x1500 rectangles):
-![alt text](examples/final1.png)
+![image1](examples/final1.jpg)
 (2000x300 rectangles)
-![alt text](examples/final2.png)
+![image2](examples/final2.jpg)
 (2000x2rows hexagon)
-![alt text](examples/final3.png)
+![image3](examples/final3.jpg)
 (2000x4rows hexagon)
-![alt text](examples/final4.png)
+![image4](examples/final4.jpg)
 ## How it works:
 
 ONLY TESTED WITH JAVA 17 (but should work with others too)
