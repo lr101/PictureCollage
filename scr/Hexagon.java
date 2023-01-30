@@ -25,7 +25,11 @@ public class Hexagon extends DefaultShape{
         for (Image image : images) {
             if (newC.yC() <= borderD.getHeight()) {
                 image.setLeftTop(newC);
-                image.getImageResized(new Dimension(xSize, ySize));
+                if (image.getRatio() > 1) {
+                    image.getImageResized(new Dimension((int) (ySize* image.getRatio()), ySize));
+                } else {
+                    image.getImageResized(new Dimension(xSize, (int) (xSize* image.getRatio())));
+                }
                 if (newC.xC() + getXSize() < borderD.getWidth()) {
                     //create a new cor bordering at the right (X -> X)
                     newC = new Coordinate(newC.xC() + xSize, newC.yC());
@@ -163,8 +167,8 @@ public class Hexagon extends DefaultShape{
             int h = d.getHeight();
             System.out.println(h);
 
-            for (int x = 0; x < width; x++){
-                for (int y = 0; y < height; y++)  {
+            for (int x = 0; x < map.length; x++){
+                for (int y = 0; y < map[x].length; y++)  {
                     if (map[x][y]) {
                         int xCor = (xC + x) % w;
                         int yCor = (yC + y) % h;
