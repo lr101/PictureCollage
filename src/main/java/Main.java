@@ -1,3 +1,6 @@
+package main.java;
+
+import java.awt.*;
 import java.io.File;
 import java.util.Objects;
 import java.util.Scanner;

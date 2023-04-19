@@ -1,9 +1,14 @@
+package main.java;
+
+import main.java.Coordinate;
+import main.java.DefaultShape;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Hexagon extends DefaultShape{
+public class Hexagon extends DefaultShape {
 
     private int size;
 

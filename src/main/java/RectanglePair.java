@@ -1,3 +1,5 @@
+package main.java;
+
 public class RectanglePair {
     private Image rec1;
     private Image rec2;

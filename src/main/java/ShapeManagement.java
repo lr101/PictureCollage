@@ -1,3 +1,8 @@
+package main.java;
+
+import main.java.DefaultShape;
+import main.java.ImageManager;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
