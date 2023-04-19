@@ -23,3 +23,5 @@ $ cd ./PictureCollage/src
 $ javac Main.java
 ```
 3. Run ```$ java Main``` and follow instruction in console
+
+or download package 'PictureCollage.jar' by hand
