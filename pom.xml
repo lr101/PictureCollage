@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>groupId</groupId>
-    <artifactId>PictureCollage</artifactId>
+    <artifactId>picturecollage</artifactId>
     <version>1</version>
 
     <properties>
