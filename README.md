@@ -14,8 +14,12 @@ Example results (2000x1500 rectangles):
 ![image4](examples/final4.jpg)
 ## How it works:
 
-ONLY TESTED WITH JAVA 17 (but should work with others too)
+ONLY works with JAVA 17
 
 1. Clone repo ```$ git clone git@github.com:lr101/PictureCollage.git```
-2. Compile ```$ javac Main.java```
+2. Compile 
+```
+$ cd ./PictureCollage/src
+$ javac Main.java
+```
 3. Run ```$ java Main``` and follow instruction in console
