@@ -1,7 +1,3 @@
-package main.java;
-
-import main.java.Coordinate;
-
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.FileImageInputStream;

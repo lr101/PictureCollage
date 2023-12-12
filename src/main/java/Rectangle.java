@@ -1,10 +1,3 @@
-package main.java;
-
-import main.java.Coordinate;
-import main.java.DefaultShape;
-import main.java.Dimension;
-import main.java.Image;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -135,5 +128,10 @@ public class Rectangle extends DefaultShape {
     @Override
     public double getSize() {
         return -1;
+    }
+
+    @Override
+    public String toString() {
+        return "Rectangle";
     }
 }

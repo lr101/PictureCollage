@@ -1,4 +1,3 @@
-package main.java;
 
 public record Coordinate(int xC, int yC) {
 

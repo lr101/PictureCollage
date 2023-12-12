@@ -1,6 +1,3 @@
-package main.java;
-
-import main.java.DefaultShape;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

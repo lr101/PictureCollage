@@ -1,8 +1,3 @@
-package main.java;
-
-import main.java.Coordinate;
-import main.java.DefaultShape;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -183,5 +178,10 @@ public class Hexagon extends DefaultShape {
             }
             bufI.flush();
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Hexagon";
     }
 }
