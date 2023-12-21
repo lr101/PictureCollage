@@ -7,6 +7,7 @@ RUN mvn -f /app/pom.xml clean package
 FROM openjdk:11-jre-slim
 WORKDIR app
 COPY --from=build /app/target/*.jar app.jar
+COPY run.sh /app/run.sh
 VOLUME /images
-RUN export IMAGES_PATH="/images"
-ENTRYPOINT ["java", "-jar", "app.jar"]
+RUN chmod +x /app/run.sh
+ENTRYPOINT ["./run.sh"]

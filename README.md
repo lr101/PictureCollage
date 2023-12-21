@@ -38,13 +38,16 @@ java -jar target/picturecollage-1.jar
 
 ### Run with Docker
 
-1. Create a mvn wrapper in your directory:
+1. Run image from docker hub:
 ```shell
-mvn -N wrapper:wrapper
+docker run \
+  -e SHAPE='Rectangle' \
+  -e WIDTH=1000 \
+  -e HEIGHT=400 \
+  -v "<path to images>:/images" \
+  lrprojects/picture-collage:latest
 ```
-
-2. Build your docker file (Note: **Don't** change the -e *IMAGES_PATH* but do so instead in the first part of -v):
-```shell
-docker build --tag "collage" .
-docker run -e SHAPE='Rectangle' -e WIDTH=1000 -e HEIGHT=400 -e IMAGES_PATH="/images" -v "C:\:/images" collage
-```
+ - Edit ``SHAPE`` use ``Rectangle`` or  ``Hexagon``
+ - Edit ``WIDTH`` in pixel
+ - Edit ``HEIGTH`` in pixel for Rectangle and number of rows for Hexagons
+ - Insert your directory path to your images under ``<path to images>``
