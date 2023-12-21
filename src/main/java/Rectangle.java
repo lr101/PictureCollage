@@ -64,7 +64,7 @@ public class Rectangle extends DefaultShape {
         int countLastBig = 0;
         random.setSeed(this.RANDOM_SEED);
         Coordinate newC = new Coordinate(0,0);
-        while (newC.yC() < borderD.getHeight() && recPair.size() != 0) {
+        while (newC.getyC() < borderD.getHeight() && recPair.size() != 0) {
             Dimension imageSize;
             if (this.random(countLastBig)) {
                 if (bigImages.size() == 0) {
@@ -79,17 +79,17 @@ public class Rectangle extends DefaultShape {
             } else {
                 imageSize = new Dimension((int) (recPair.get(0).getRatio() * loopHeight), loopHeight);
                 this.setImageCoordinates(recPair.get(0).getRec1(), newC, imageSize);
-                this.setImageCoordinates(recPair.get(0).getRec2(), new Coordinate(newC.xC(), newC.yC() + imageSize.getHeight()), imageSize);
+                this.setImageCoordinates(recPair.get(0).getRec2(), new Coordinate(newC.getxC(), newC.getyC() + imageSize.getHeight()), imageSize);
                 recPair.remove(0);
                 countLastBig++;
             }
 
-            if (newC.xC() + imageSize.getWidth() < borderD.getWidth()) {
+            if (newC.getxC() + imageSize.getWidth() < borderD.getWidth()) {
                 //create a new cor bordering at the right (X -> X)
-                newC = new Coordinate(newC.xC() + imageSize.getWidth(), newC.yC());
+                newC = new Coordinate(newC.getxC() + imageSize.getWidth(), newC.getyC());
             } else {
                 //create a new row below
-                newC = new Coordinate(0, newC.yC() + loopHeight * 2);
+                newC = new Coordinate(0, newC.getyC() + loopHeight * 2);
             }
         }
         return recPair.size() != 0;

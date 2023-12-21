@@ -1,13 +1,12 @@
-FROM openjdk:17-jdk-slim AS build
+FROM maven:3.6.0-jdk-11-slim AS build
 
-COPY pom.xml mvnw ./
-COPY .mvn .mvn
-RUN ./mvnw dependency:resolve
+COPY src /app/src
+COPY pom.xml /app/pom.xml
+RUN mvn -f /app/pom.xml clean package
 
-COPY src src
-RUN ./mvnw package
-
-FROM openjdk:17-jdk-slim
-WORKDIR demo
-COPY --from=build target/*.jar demo.jar
-ENTRYPOINT ["java", "-jar", "picturecollage-1.jar"]
+FROM openjdk:11-jre-slim
+WORKDIR app
+COPY --from=build target/*.jar app.jar
+VOLUME /images
+RUN export IMAGES_PATH="/images"
+ENTRYPOINT ["java", "-jar", "app.jar"]

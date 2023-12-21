@@ -23,19 +23,19 @@ public class Hexagon extends DefaultShape {
         ArrayList<Image> toBeRemoved = new ArrayList<>();
         //loop
         for (Image image : images) {
-            if (newC.yC() <= borderD.getHeight()) {
+            if (newC.getyC() <= borderD.getHeight()) {
                 image.setLeftTop(newC);
                 if (image.getRatio() > 1) {
                     image.getImageResized(new Dimension((int) (ySize* image.getRatio()), ySize));
                 } else {
                     image.getImageResized(new Dimension(xSize, (int) (xSize* image.getRatio())));
                 }
-                if (newC.xC() + getXSize() < borderD.getWidth()) {
+                if (newC.getxC() + getXSize() < borderD.getWidth()) {
                     //create a new cor bordering at the right (X -> X)
-                    newC = new Coordinate(newC.xC() + xSize, newC.yC());
+                    newC = new Coordinate(newC.getxC() + xSize, newC.getyC());
                 } else {
                     //create a new row below
-                    newC = new Coordinate((even ? (int) (xSize  * 0.5) : 0), newC.yC() + (int) (size * 1.5));
+                    newC = new Coordinate((even ? (int) (xSize  * 0.5) : 0), newC.getyC() + (int) (size * 1.5));
                     even = !even;
                 }
             } else {
@@ -65,7 +65,7 @@ public class Hexagon extends DefaultShape {
         Coordinate center = new Coordinate(inRadius, (int)size);
         for (int i = 0; i < 6; i++) {
             Coordinate c = this.calCorner(center, i);
-            polygon.addPoint(c.xC(), c.yC());
+            polygon.addPoint(c.getxC(), c.getyC());
         }
         g.draw(polygon);
         g.fill(polygon);
@@ -87,22 +87,22 @@ public class Hexagon extends DefaultShape {
         Coordinate p;
         switch (corner % 6) {
             case 0:
-                p = new Coordinate(center.xC(), center.yC() + size);
+                p = new Coordinate(center.getxC(), center.getyC() + size);
                 break;
             case 1:
-                p = new Coordinate(center.xC() + this.getXSize(), center.yC() + size/2);
+                p = new Coordinate(center.getxC() + this.getXSize(), center.getyC() + size/2);
                 break;
             case 2:
-                p = new Coordinate(center.xC() + this.getXSize(), center.yC() - size/2);
+                p = new Coordinate(center.getxC() + this.getXSize(), center.getyC() - size/2);
                 break;
             case 3:
-                p = new Coordinate(center.xC(), center.yC() - size);
+                p = new Coordinate(center.getxC(), center.getyC() - size);
                 break;
             case 4:
-                p = new Coordinate(center.xC() - this.getXSize(), center.yC() - size/2);
+                p = new Coordinate(center.getxC() - this.getXSize(), center.getyC() - size/2);
                 break;
             case 5:
-                p = new Coordinate(center.xC() - this.getXSize(), center.yC() + size/2);
+                p = new Coordinate(center.getxC() - this.getXSize(), center.getyC() + size/2);
                 break;
             default: p = new Coordinate(0,0);
         }
@@ -159,8 +159,8 @@ public class Hexagon extends DefaultShape {
             int width = image.getWidth();
             int height = image.getHeight();
 
-            int xC = image.getLeftTop().xC();
-            int yC = image.getLeftTop().yC();
+            int xC = image.getLeftTop().getxC();
+            int yC = image.getLeftTop().getyC();
 
             BufferedImage bufI = image.getImage();
             int w = d.getWidth();

@@ -14,14 +14,37 @@ Example results (2000x1500 rectangles):
 ![image4](examples/final4.jpg)
 ## How it works:
 
-ONLY works with JAVA 17
+### Run with maven and java 17:
 
-1. Clone repo ```$ git clone git@github.com:lr101/PictureCollage.git```
-2. Compile 
+1. Clone repo 
 ```
-$ cd ./PictureCollage/src
-$ javac Main.java
+git clone git@github.com:lr101/PictureCollage.git
 ```
-3. Run ```$ java Main``` and follow instruction in console
+2. Compile:
+```shell
+mvn install
+```
+3. Set environment variables like this or any other way:
+```
+export IMAGES_PATH="C:\"
+export SHAPE=Rectangle
+export WIDTH=1000
+export HEIGHT400
+```
+4. Run the jar
+```shell
+java -jar target/picturecollage-1.jar
+```
 
-or download package 'PictureCollage.jar' by hand
+### Run with Docker
+
+1. Create a mvn wrapper in your directory:
+```shell
+mvn -N wrapper:wrapper
+```
+
+2. Build your docker file (Note: **Don't** change the -e *IMAGES_PATH* but do so instead in the first part of -v):
+```shell
+docker build --tag "collage" .
+docker run -e SHAPE='Rectangle' -e WIDTH=1000 -e HEIGHT=400 -e IMAGES_PATH="/images" -v "C:\:/images" collage
+```

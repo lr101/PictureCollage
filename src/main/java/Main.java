@@ -23,8 +23,8 @@ public class Main {
 
         print("Collage created BY dev.lr.projects@gmail.com\n");
         print("Used directory: " + picturesDir);
-        print("Used shape:" + SELECTED_SHAPE.toString());
-        print("Used width:" + WIDTH);
+        print("Used shape: " + SELECTED_SHAPE.toString());
+        print("Used width: " + WIDTH);
         print("Used Height: " + HEIGHT + " " + (SELECTED_SHAPE instanceof Hexagon ? "rows" : "pixel"));
         print("Saving into: " + FILE_NAME);
 
