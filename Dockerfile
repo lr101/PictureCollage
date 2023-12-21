@@ -6,7 +6,7 @@ RUN mvn -f /app/pom.xml clean package
 
 FROM openjdk:11-jre-slim
 WORKDIR app
-COPY --from=build target/*.jar app.jar
+COPY --from=build /app/target/*.jar app.jar
 VOLUME /images
 RUN export IMAGES_PATH="/images"
 ENTRYPOINT ["java", "-jar", "app.jar"]
