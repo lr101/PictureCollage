@@ -114,7 +114,11 @@ public class Hexagon extends DefaultShape {
     }
 
     int getWidth(int width) {
-        return (width / (2 * this.getXSize())) *  2 * this.getXSize();
+        int w = (width / (2 * this.getXSize())) *  2 * this.getXSize();
+        if (w <= 1) {
+            throw new NullPointerException("Height is big -> Therefore width is smaller than 1 pixel");
+        }
+        return w;
     }
 
     public void setSize(int width, int numImages, int rows) {

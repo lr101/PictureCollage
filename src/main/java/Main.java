@@ -72,12 +72,17 @@ public class Main {
             print("Stopping without doing anything: Not enough images found (only 0 or 1)");
             return;
         }
-        if (SELECTED_SHAPE instanceof Hexagon) {
-            m = new ShapeManagement(new File(picturesDir), imagePaths, SELECTED_SHAPE, new File(picturesDir), HEIGHT, WIDTH);
-        } else {
-            m = new ShapeManagement(new File(picturesDir), imagePaths, SELECTED_SHAPE, new File(picturesDir), new Dimension(WIDTH, HEIGHT));
+        try {
+            if (SELECTED_SHAPE instanceof Hexagon) {
+                m = new ShapeManagement(new File(picturesDir), imagePaths, SELECTED_SHAPE, new File(picturesDir), HEIGHT, WIDTH);
+            } else {
+                m = new ShapeManagement(new File(picturesDir), imagePaths, SELECTED_SHAPE, new File(picturesDir), new Dimension(WIDTH, HEIGHT));
+            }
+            m.run(FILE_NAME);
+        } catch (Exception e){
+            print("Stopping: " + e.getMessage());
+            return;
         }
-        m.run(FILE_NAME);
         print("Finished: Saved into: " + FILE_NAME);
 
     }
