@@ -8,24 +8,21 @@ import java.util.ArrayList;
 
 public class ImageManager {
 
-    private static final String FILE_TYPE = "PNG";
+    private static final String FILE_TYPE = "png";
 
     private final File file;
 
     public ImageManager(File file) {
         this.file = file;
     }
-    public ArrayList<Image> getImages() throws IOException {
+    public ArrayList<Image> getImages(String[] imagePaths) throws IOException {
         ArrayList<Image> imageL = new ArrayList<>();
-        for (String name : readDir()) {
+        for (String name : imagePaths) {
             imageL.add(new Image(new File(file.getAbsolutePath(), name)));
         }
         return imageL;
     }
 
-    private String[] readDir() {
-        return file.list((dir, name) -> (name.toLowerCase().endsWith(".jpg") || name.toLowerCase().endsWith(".jpeg") || name.toLowerCase().endsWith(".png")));
-    }
 
     public void writeImage(ArrayList<Image> images, Dimension d, File savingDir, String name, DefaultShape shape) throws IOException {
         BufferedImage image = new BufferedImage(d.getWidth(), d.getHeight(), BufferedImage.TYPE_INT_ARGB);

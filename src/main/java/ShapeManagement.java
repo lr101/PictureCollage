@@ -10,24 +10,28 @@ public class ShapeManagement {
     private final DefaultShape defaultShape;
     private final Dimension finalPictureDimension;
 
-    public ShapeManagement(File workingDir, DefaultShape defaultShape, File savingDir, Dimension finalPictureDimension) {
+    private final String[] imagePaths;
+
+    public ShapeManagement(File workingDir, String[] imagePaths, DefaultShape defaultShape, File savingDir, Dimension finalPictureDimension) {
         this.workingDir = workingDir;
+        this.imagePaths = imagePaths;
         this.defaultShape = defaultShape;
         this.savingDir = savingDir;
         this.finalPictureDimension = finalPictureDimension;
     }
 
-    public ShapeManagement(File workingDir, DefaultShape defaultShape, File savingDir, int rows, int width, int numImages) {
+    public ShapeManagement(File workingDir, String[] imagePaths, DefaultShape defaultShape, File savingDir, int rows, int width) {
         this.workingDir = workingDir;
+        this.imagePaths = imagePaths;
         this.defaultShape = defaultShape;
         this.savingDir = savingDir;
-        this.finalPictureDimension = defaultShape.getFinalPictureSize(numImages, rows, width);
+        this.finalPictureDimension = defaultShape.getFinalPictureSize(imagePaths.length, rows, width);
     }
 
     public void run(String name) {
         try {
             ImageManager imageManager = new ImageManager(workingDir);
-            ArrayList<Image> images = imageManager.getImages();
+            ArrayList<Image> images = imageManager.getImages(imagePaths);
             //change size of images
             //change bitmap of images
             //set coordinates in images

@@ -42,15 +42,9 @@ public class Rectangle extends DefaultShape {
             ArrayList<RectanglePair> recPair = new ArrayList<>();
 
             int loopHeight = this.getLoopHeight(borderD, images, recPair, bigImages);
-            System.out.println(loopHeight);
             this.runCoordinates(borderD, loopHeight, bigImages, recPair, images);
-            for (Image i : bigImages) {
-                System.out.println(i);
-            }
             images.removeAll(bigImages);
             for(RectanglePair r : recPair) {
-                System.out.println(r.getRec1());
-                System.out.println(r.getRec2());
                 images.remove(r.getRec1());
                 images.remove(r.getRec2());
             }

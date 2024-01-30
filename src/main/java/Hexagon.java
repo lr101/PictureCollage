@@ -120,7 +120,6 @@ public class Hexagon extends DefaultShape {
     public void setSize(int width, int numImages, int rows) {
         double c = 1 /  Math.sqrt(3.0);
         int size = (int) Math.ceil((c * ((rows * width) / (double) numImages)));
-        System.out.println(size);
         //round up to the next round number. This prevents rounding error later on
         this.size = (size % 2 == 0 ? size : size + 1);
     }
@@ -165,7 +164,6 @@ public class Hexagon extends DefaultShape {
             BufferedImage bufI = image.getImage();
             int w = d.getWidth();
             int h = d.getHeight();
-            System.out.println(h);
 
             for (int x = 0; x < map.length; x++){
                 for (int y = 0; y < map[x].length; y++)  {

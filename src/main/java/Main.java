@@ -13,11 +13,40 @@ public class Main {
     public static String FILE_NAME;
 
     public static void main(String[] args) {
-        File path = new File(System.getenv("IMAGES_PATH"));
+        String imagesPath;
+        String shape;
+        String width;
+        String height;
+        if (args.length == 4) {
+            imagesPath = args[0];
+            shape = args[1];
+            width = args[2];
+            height = args[3];
+        } else {
+            imagesPath = System.getenv("IMAGES_PATH");
+            shape = System.getenv("SHAPE");
+            width = System.getenv("WIDTH");
+            height = System.getenv("HEIGHT");
+        }
+        if (imagesPath.isEmpty() || imagesPath.isBlank()) {
+            print("No 'IMAGE_PATH' was provided as argument or environment variable");
+            return;
+        } else if (shape.isEmpty() || shape.isBlank()) {
+            print("No 'SHAPE' was provided as argument or environment variable");
+            return;
+        } else if (width.isEmpty() || width.isBlank()) {
+            print("No 'WIDTH' was provided as argument or environment variable");
+            return;
+        } else if (height.isEmpty() || height.isBlank()) {
+            print("No 'HEIGHT / ROWS' was provided as argument or environment variable");
+            return;
+        }
+
+        File path = new File(imagesPath);
         String picturesDir = path.getAbsolutePath();
-        SELECTED_SHAPE = System.getenv("SHAPE").equals("Hexagon") ? new Hexagon() : new Rectangle();
-        WIDTH = Integer.parseInt(System.getenv("WIDTH"));
-        HEIGHT = Integer.parseInt(System.getenv("HEIGHT"));
+        SELECTED_SHAPE = shape.equals("Hexagon") ? new Hexagon() : new Rectangle();
+        WIDTH = Integer.parseInt(width);
+        HEIGHT = Integer.parseInt(height);
 
         FILE_NAME = new SimpleDateFormat("yyyyMMddHHmm'_collage'").format(new Date());
 
@@ -26,16 +55,30 @@ public class Main {
         print("Used shape: " + SELECTED_SHAPE.toString());
         print("Used width: " + WIDTH);
         print("Used Height: " + HEIGHT + " " + (SELECTED_SHAPE instanceof Hexagon ? "rows" : "pixel"));
-        print("Saving into: " + FILE_NAME);
+        print("### Starting ###");
 
         ShapeManagement m;
-        int numImages = Objects.requireNonNull(new File(picturesDir).list((dir, name) -> (name.toLowerCase().endsWith(".jpg") || name.toLowerCase().endsWith(".jpeg") || name.toLowerCase().endsWith(".png")))).length;
+
+        String[] imagePaths = Objects.requireNonNull(new File(picturesDir).list((dir, name) -> (
+                !name.toLowerCase().endsWith("_collage.png") && (
+                        name.toLowerCase().endsWith(".jpg")
+                        || name.toLowerCase().endsWith(".jpeg")
+                        || name.toLowerCase().endsWith(".png")
+                )
+        )));
+
+
+        if (imagePaths.length <= 1) {
+            print("Stopping without doing anything: Not enough images found (only 0 or 1)");
+            return;
+        }
         if (SELECTED_SHAPE instanceof Hexagon) {
-            m = new ShapeManagement(new File(picturesDir), SELECTED_SHAPE, new File(picturesDir), HEIGHT, WIDTH, numImages);
+            m = new ShapeManagement(new File(picturesDir), imagePaths, SELECTED_SHAPE, new File(picturesDir), HEIGHT, WIDTH);
         } else {
-            m = new ShapeManagement(new File(picturesDir), SELECTED_SHAPE, new File(picturesDir), new Dimension(WIDTH, HEIGHT));
+            m = new ShapeManagement(new File(picturesDir), imagePaths, SELECTED_SHAPE, new File(picturesDir), new Dimension(WIDTH, HEIGHT));
         }
         m.run(FILE_NAME);
+        print("Finished: Saved into: " + FILE_NAME);
 
     }
 
