@@ -53,31 +53,29 @@ public class Main {
         print("Collage created BY dev.lr.projects@gmail.com\n");
         print("Used directory: " + picturesDir);
         print("Used shape: " + SELECTED_SHAPE.toString());
-        print("Used width: " + WIDTH);
+        print("Used width: " + WIDTH + " pixel");
         print("Used Height: " + HEIGHT + " " + (SELECTED_SHAPE instanceof Hexagon ? "rows" : "pixel"));
         print("### Starting ###");
 
         ShapeManagement m;
 
-        String[] imagePaths = Objects.requireNonNull(new File(picturesDir).list((dir, name) -> (
+        String[] imagePaths = new File(picturesDir).list((dir, name) -> (
                 !name.toLowerCase().endsWith("_collage.png") && (
                         name.toLowerCase().endsWith(".jpg")
                         || name.toLowerCase().endsWith(".jpeg")
                         || name.toLowerCase().endsWith(".png")
                 )
-        )));
+        ));
 
-
-        if (imagePaths.length <= 1) {
+        if (imagePaths == null) {
+            print("Stopping without doing anything: Directory does not exist");
+            return;
+        } else if ( imagePaths.length <= 1) {
             print("Stopping without doing anything: Not enough images found (only 0 or 1)");
             return;
         }
         try {
-            if (SELECTED_SHAPE instanceof Hexagon) {
-                m = new ShapeManagement(new File(picturesDir), imagePaths, SELECTED_SHAPE, new File(picturesDir), HEIGHT, WIDTH);
-            } else {
-                m = new ShapeManagement(new File(picturesDir), imagePaths, SELECTED_SHAPE, new File(picturesDir), new Dimension(WIDTH, HEIGHT));
-            }
+            m = new ShapeManagement(new File(picturesDir), imagePaths, SELECTED_SHAPE, new File(picturesDir), HEIGHT, WIDTH);
             m.run(FILE_NAME);
         } catch (Exception e){
             print("Stopping: " + e.getMessage());

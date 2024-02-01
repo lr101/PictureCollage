@@ -103,9 +103,8 @@ public class Rectangle extends DefaultShape {
     }
 
     @Override
-    public Dimension getFinalPictureSize(int numImages, int rows, int width) {
-        //TODO
-        return null;
+    public Dimension getFinalPictureSize(int numImages, int height, int width) {
+        return new Dimension(width, height);
     }
 
     @Override

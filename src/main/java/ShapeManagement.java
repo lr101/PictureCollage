@@ -12,20 +12,13 @@ public class ShapeManagement {
 
     private final String[] imagePaths;
 
-    public ShapeManagement(File workingDir, String[] imagePaths, DefaultShape defaultShape, File savingDir, Dimension finalPictureDimension) {
-        this.workingDir = workingDir;
-        this.imagePaths = imagePaths;
-        this.defaultShape = defaultShape;
-        this.savingDir = savingDir;
-        this.finalPictureDimension = finalPictureDimension;
-    }
 
-    public ShapeManagement(File workingDir, String[] imagePaths, DefaultShape defaultShape, File savingDir, int rows, int width) {
+    public ShapeManagement(File workingDir, String[] imagePaths, DefaultShape defaultShape, File savingDir, int height, int width) {
         this.workingDir = workingDir;
         this.imagePaths = imagePaths;
         this.defaultShape = defaultShape;
         this.savingDir = savingDir;
-        this.finalPictureDimension = defaultShape.getFinalPictureSize(imagePaths.length, rows, width);
+        this.finalPictureDimension = defaultShape.getFinalPictureSize(imagePaths.length, height, width);
     }
 
     public void run(String name) {
@@ -40,7 +33,7 @@ public class ShapeManagement {
             imageManager.writeImage(images, finalPictureDimension, savingDir, name, defaultShape);
 
         } catch (IOException e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
     }
 
