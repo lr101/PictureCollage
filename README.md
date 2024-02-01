@@ -3,8 +3,9 @@
 This JAVA Program takes multiple images from a selects folder and creates with a selectes width and height a random collage. It works with different sized images and different ratio images, so no pre-processing is necessary. Additionally, there are two available shapes to choose from: *Rectangle* and *Hexagon* 
 
 Features:
-- Only works properly on 10+ Images but made for A LOT of high quality images
-- Perfect for posters
+- Only works properly on 10+ Images but made for **A LOT** of high quality images
+- Perfect for posters with **100+** Images
+- Can create high resolution **>100MB** png collages 
 - Use original *Rectangle* shapes or *Hexagons*
 - Create *Rectangles* with small and big images
 
